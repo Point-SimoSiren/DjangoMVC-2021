@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Supplier
+from .models import Supplier, Product
 
 def landingview(request):
     return render (request, 'landingpage.html')
+
+# SUPPLIERS
 
 def supplierlistview(request):
     supplierlist = Supplier.objects.all()
@@ -22,3 +24,20 @@ def addsupplier(request):
 def deletesupplier(request, id):
     Supplier.objects.filter(id = id).delete()
     return redirect(request.META['HTTP_REFERER'])
+
+# PRODUCTS
+
+def productlistview(request):
+    productlist = Product.objects.all()
+    context = {'products': productlist}
+    return render (request,"products.html",context)
+
+
+def addproduct(request):
+    a = request.POST['productname']
+    b = request.POST['packagesize']
+    c = request.POST['unitprice']
+    d = request.POST['unitsinstock']
+    e = request.POST['companyname']
+    Product(productname = a, packagesize = b, unitprice = c, unitsinstock = d, companyname = e).save()
+    return redirect(request.META['HTTP_REFERER']) 
