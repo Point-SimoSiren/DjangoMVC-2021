@@ -29,7 +29,8 @@ def deletesupplier(request, id):
 
 def productlistview(request):
     productlist = Product.objects.all()
-    context = {'products': productlist}
+    supplierlist = Supplier.objects.all()
+    context = {'products': productlist, 'suppliers': supplierlist}
     return render (request,"products.html",context)
 
 
@@ -39,7 +40,8 @@ def addproduct(request):
     c = request.POST['unitprice']
     d = request.POST['unitsinstock']
     e = request.POST['supplier']
-    Product(productname = a, packagesize = b, unitprice = c, unitsinstock = d, supplier = e).save()
+    
+    Product(productname = a, packagesize = b, unitprice = c, unitsinstock = d, supplier = Supplier.objects.get(id = e)).save()
     return redirect(request.META['HTTP_REFERER'])
 
 
