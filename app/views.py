@@ -18,3 +18,7 @@ def addsupplier(request):
     f = request.POST['country']
     Supplier(companyname = a, contactname = b, address = c, phone = d, email = e, country = f).save()
     return redirect(request.META['HTTP_REFERER'])
+
+def deletesupplier(request, id):
+    Supplier.objects.filter(id = id).delete()
+    return redirect(request.META['HTTP_REFERER'])
