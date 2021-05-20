@@ -38,6 +38,11 @@ def addproduct(request):
     b = request.POST['packagesize']
     c = request.POST['unitprice']
     d = request.POST['unitsinstock']
-    e = request.POST['companyname']
-    Product(productname = a, packagesize = b, unitprice = c, unitsinstock = d, companyname = e).save()
-    return redirect(request.META['HTTP_REFERER']) 
+    e = request.POST['supplier']
+    Product(productname = a, packagesize = b, unitprice = c, unitsinstock = d, supplier = e).save()
+    return redirect(request.META['HTTP_REFERER'])
+
+
+def deleteproduct(request, id):
+    Product.objects.filter(id = id).delete()
+    return redirect(request.META['HTTP_REFERER'])
