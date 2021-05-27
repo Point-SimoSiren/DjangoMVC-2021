@@ -25,6 +25,21 @@ def deletesupplier(request, id):
     Supplier.objects.filter(id = id).delete()
     return redirect(request.META['HTTP_REFERER'])
 
+def edit_supplier_get(request, id):
+    supplier = Supplier.objects.filter(id = id)
+    context = {'supplier': supplier}
+    return render (request,"edit_supplier.html",context)
+
+def edit_supplier_post(request, id):
+    item = Supplier.objects.get(id = id)
+    item.contactname = request.POST['contactname']
+    item.address = request.POST['address']
+    item.phone = request.POST['phone']
+    item.email = request.POST['email']
+    item.country = request.POST['country']
+    item.save()
+    return redirect(supplierlistview)
+
 # PRODUCTS
 
 def productlistview(request):
@@ -48,3 +63,23 @@ def addproduct(request):
 def deleteproduct(request, id):
     Product.objects.filter(id = id).delete()
     return redirect(request.META['HTTP_REFERER'])
+
+def edit_product_get(request, id):
+    product = Product.objects.filter(id = id)
+    context = {'product': product}
+    return render (request,"edit_product.html",context)
+
+def edit_product_post(request, id):
+    item = Product.objects.get(id = id)
+    item.unitprice = request.POST['unitprice']
+    item.unitsinstock = request.POST['unitsinstock']
+    item.save()
+    return redirect(productlistview)
+
+# Get products by company name
+
+def products_filtered(request, id):
+    productlist = Product.objects.all()
+    filteredproducts = productlist.filter(supplier = id)
+    context = {'products': filteredproducts}
+    return render (request,"products.html",context)
