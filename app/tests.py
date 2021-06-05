@@ -1,3 +1,4 @@
+'''
 from django.http import response
 from django.test import TestCase, Client, client
 import unittest
@@ -10,7 +11,7 @@ client = Client()
 
 class ListMethodTests(TestCase):
     def test_listing_products(self):
-        ''' palauttaa statuskoodin 200 '''
+        palauttaa statuskoodin 200
         response = client.get(reverse(productlistview))
         self.assertEqual(response.status_code, 200)
 
@@ -38,3 +39,4 @@ class LaskinTests(TestCase):
     def test_plus_should_fail(self):
         self.assertEqual(plus(7, 3), "teppo")
 
+'''
